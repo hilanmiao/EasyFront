@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/unslider.css">
+    <link rel="stylesheet" href="css/unslider-dots.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+</head>
+<body>
+<div class="my-slider">
+    <ul>
+        <li>
+            <a target="_blank" href="#">
+                <img src="http://www.bootcss.com/p/unslider/img/shop.jpg">
+            </a>
+        </li>
+        <li>
+            <a target="_blank" href="#">
+                <img src="http://www.bootcss.com/p/unslider/img/subway.jpg">
+            </a>
+        </li>
+        <li>
+            <a target="_blank" href="#">
+                <img src="http://www.bootcss.com/p/unslider/img/sunset.jpg">
+            </a>
+        </li>
+        <li>
+            <a target="_blank" href="#">
+                <img src="http://www.bootcss.com/p/unslider/img/wood.jpg">
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<blockquote>
+    <h1>轻量的JQuery轮播图插件 <a href="http://www.bootcss.com/p/unslider/" target="_blank">unslider</a></h1>
+    <p>Note:重写了原点导航和左右箭头的样式</p>
+</blockquote>
+
+
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="js/unslider-min.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $('.my-slider').unslider({
+            autoplay: true, // 开启自动播放
+            speed: 750, // 幻灯片切换速度
+            delay: 3000, // 每张幻灯片停留时间
+            keys: true, // 开启键盘支持
+            nav: true, // 开启原点导航
+            arrows: true, // 开启左右箭头
+            animation: 'horizontal', // 动画类型，horizontal,vertical,fade
+            animateHeight: false, // 开启动画高度自适应（一般长宽都限制一样的，这里用不大）
+            arrows: {
+                // 重写左右箭头
+                prev: '<a class="unslider-arrow prev"></a>',
+                next: '<a class="unslider-arrow next"></a>',
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
