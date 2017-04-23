@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .newMap {
+            position: relative;
+            width: 600px;
+        }
+
+        .region {
+            width: 450px;
+            display: none;
+            border: 2px solid #eee;
+            padding: 5px;
+            position: absolute;
+            background: #ffffff;
+            top: 100px;
+            left: 50px;
+        }
+
+        .region span {
+            color: #56b4f8;
+            height: 15px;
+            width: 15px;
+            line-height: 15px;
+            text-align: center;
+            border-radius: 3px;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            border: 1px solid #56b4f8;
+            cursor: pointer;
+        }
+
+        .regionType {
+            width: 100%;
+            height: 34px;
+            display: inline-block;
+            border-bottom: 2px solid #56b4f8;
+            padding: 0;
+            margin: 0;
+        }
+
+        .regionType li {
+            display: inline-block;
+            line-height: 34px;
+            font-size: 15px;
+            color: #888;
+            width: 80px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .regionSelected {
+            background-color: #56b4f8;
+            color: #fff !important;
+        }
+
+        .citys {
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .citys a {
+            width: 83px;
+            height: 35px;
+            display: inline-block;
+            background-color: #f5f5f5;
+            color: #666;
+            margin-left: 6px;
+            margin-top: 3px;
+            line-height: 35px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            overflow: hidden;
+        }
+
+        .citys a:hover {
+            color: #fff;
+            background-color: #56b4f8;
+        }
+
+        .citySelected {
+            background-color: #56b4f8 !important;
+            color: #fff !important;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+    <script src="js/chinamapPath.js" type="text/javascript"></script>
+    <script src="js/chinamapPathNew.js" type="text/javascript"></script>
+    <script src="js/raphael.js" type="text/javascript"></script>
+    <script src="js/cityJson.js"></script>
+</head>
+<body>
+<div class="newMap">
+    <div id="chinaMapNew"></div>
+    <div class="region">
+        <span title="关闭" class="regionColse">×</span>
+        <ul class="regionType">
+            <li class="regionCity regionSelected">城市</li>
+            <li class="regionCounty">区县</li>
+        </ul>
+        <div class="citys cityContainer">
+            <a data-level="1" data-id="820001" data-name="澳门" title="澳门">澳门</a>
+        </div>
+        <div style="display:none" class="citys countyContainer">
+            <a data-level="1" data-id="820002" data-name="市区" title="市区">市区</a>
+        </div>
+    </div>
+
+    <h2>Note:这个城市选择框来自-jquery仿京东省市县三级联动选择代码演示_大头网</h2>
+</div>
+<script>
+    var region = function () {
+
+        var getCity = function (index) {
+            if (index === -1) return;
+            var html = '';
+
+            cityJson.provinceList[index].city.forEach(function (item, index, array) {
+                html += '<a data-id="' + item.id + '">' + item.name + '</a>';
+            });
+
+            return html;
+        };
+
+        var getCounty = function (pid) {
+            var html = '';
+
+            if (!pid) return;
+
+            cityJson.countyList.filter(function (item) {
+                return parseInt(item.pid) === pid;
+            }).forEach(function (item, index, array) {
+                html += '<a data-id="' + item.id + '">' + item.name + '</a>';
+            });
+
+            return html;
+        }
+
+        var openRegion = function (province) {
+            closeRegion();
+
+            var cityIndex = -1;
+            var searchResult = cityJson.provinceList.some(function (item, index, array) {
+                cityIndex = index;
+                return item.name.indexOf(province) > -1;
+            });
+
+            if (searchResult) {
+                var cityHtml = getCity(cityIndex);
+                // 恢复默认效果
+                $('.regionType li').removeClass('regionSelected');
+                $('.regionType li:eq(0)').addClass('regionSelected');
+                $('.countyContainer').empty();
+                $('.cityContainer').empty().append(cityHtml);
+                $('.region').fadeIn(500);
+                $('.cityContainer').show();
+            }
+        };
+
+        var closeRegion = function () {
+            $('.region').hide();
+        };
+
+        var bindEvent = function () {
+            $(document).on('click', '.regionColse', function () {
+                closeRegion();
+            });
+
+            $(document).on('click', '.regionType li', function () {
+                $('.regionType li').removeClass('regionSelected');
+                $(this).addClass('regionSelected');
+
+                $('.citys').hide();
+                if ($(this).hasClass('regionCity')) {
+                    $('.cityContainer').show();
+                } else {
+                    $('.countyContainer').show();
+                }
+            });
+
+            $(document).on('click', '.cityContainer a', function () {
+                $('.regionType li').removeClass('regionSelected');
+                $('.regionCounty').addClass('regionSelected');
+                $('.citys').hide();
+                $('.cityContainer a').removeClass('citySelected');
+                $(this).addClass('citySelected');
+
+                // 获取区县数据
+                var countyHtml = getCounty($(this).data('id'));
+                $('.countyContainer').empty().append(countyHtml);
+                $('.countyContainer').show();
+            });
+
+            $(document).on('click', '.countyContainer a', function () {
+                $('.countyContainer a').removeClass('citySelected');
+                $(this).addClass('citySelected');
+                // TODO:给一个回调
+            });
+
+        };
+
+        return {
+            init: function () {
+                bindEvent();
+            },
+            openRegion: openRegion,
+            closeRegion: closeRegion
+        }
+    }();
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        // ===================
+        // 城市选择
+        // ===================
+        (function ($) {
+            region.init();
+        })(jQuery);
+
+        // ===================
+        // 中国地图
+        // ===================
+        (function ($) {
+            // 名称样式
+            var textAttr = {
+                "fill": "#000",
+                "font-size": "12px",
+                "cursor": "pointer"
+            };
+
+            var chinaR = Raphael("chinaMapNew", 600, 500);
+
+            var attr = {
+                "fill": "#97d6f5",
+                "stroke": "#eee",
+                "stroke-width": 1,
+                "stroke-linejoin": "round"
+            };
+
+            // 还原path
+            var resetPath = function () {
+                chinaR.forEach(function (e) {
+                    // 好险，好歹有这么个属性，不然就黑了
+                    if (e.getTotalLength()) {
+                        e.animate({fill: attr.fill, stroke: attr.stroke}, 500);
+                    }
+                });
+            };
+
+            // 调用地图绘制方法
+            chinaMap.provinceList.forEach(function (item, value, array) {
+                var name = item.name;
+                var path = chinaR.path(item.path)
+                path.attr(attr);
+                path.color = Raphael.getColor(0.9);
+
+                // 获取当前图形的中心坐标
+                var xx = path.getBBox().x + (path.getBBox().width / 2);
+                var yy = path.getBBox().y + (path.getBBox().height / 2);
+
+                // 修改部分地图文字偏移坐标
+                switch (name) {
+                    case "江苏":
+                        xx += 5;
+                        yy -= 10;
+                        break;
+                    case "河北":
+                        xx -= 10;
+                        yy += 20;
+                        break;
+                    case "天津":
+                        xx += 10;
+                        yy += 10;
+                        break;
+                    case "上海":
+                        xx += 10;
+                        break;
+                    case "广东":
+                        yy -= 10;
+                        break;
+                    case "澳门":
+                        yy += 10;
+                        break;
+                    case "香港":
+                        xx += 20;
+                        yy += 5;
+                        break;
+                    case "甘肃":
+                        xx -= 40;
+                        yy -= 30;
+                        break;
+                    case "陕西":
+                        xx += 5;
+                        yy += 10;
+                        break;
+                    case "内蒙古":
+                        xx -= 15;
+                        yy += 65;
+                        break;
+                    default:
+                }
+
+                // 写入文字
+                var text;
+                text = chinaR.text(xx, yy, name).attr(textAttr);
+
+                // 事件
+                path.mouseover(function (e) {
+                    // 还原path
+//                    resetPath();
+                    // 设置新的动画
+                    path.animate({fill: path.color, stroke: "#eee"}, 500);
+                });
+
+                path.mouseout(function (e) {
+                    // 还原path
+//                    resetPath();
+                });
+
+                path.click(function (e) {
+                    // 弹出城市选择
+                    region.openRegion(name);
+                });
+
+                text.click(function (e) {
+                    // 弹出城市选择
+                    region.openRegion(name);
+                });
+
+                text.mouseover(function (e) {
+                    // 还原path
+//                    resetPath();
+                    // 设置新的动画
+                    path.animate({fill: path.color, stroke: "#eee"}, 500);
+                });
+
+                text.mouseout(function () {
+                    // 还原path
+//                    resetPath();
+                });
+            });
+        })(jQuery);
+
+    });
+
+
+</script>
+
+
+</body>
+</html>

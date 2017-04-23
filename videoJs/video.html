@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video.js | HTML5 Video Player</title>
+    <link href="http://vjs.zencdn.net/5.11.9/video-js.css" rel="stylesheet">
+    <!-- If you'd like to support IE8 -->
+    <!--<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>-->
+</head>
+
+<body>
+
+<h2>官方全是英文的api，可以先看看这个<a href="http://www.cnblogs.com/luckk/p/5239991.html">Html5 Audio/Video 标签，属性，方法，事件汇总</a></h2>
+
+<!--<video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"-->
+<!--controls preload="auto" width="640" height="264"-->
+<!--poster="http://vjs.zencdn.net/v/oceans.png"-->
+<!--data-setup='{"example_option":true}'>-->
+<!--<source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">-->
+<!--<source src="http://vjs.zencdn.net/v/oceans.webm" type="video/webm"/>-->
+<!--<source src="http://vjs.zencdn.net/v/oceans.ogv" type="video/ogg"/>-->
+<!--&lt;!&ndash;WebVTT 字幕文件&ndash;&gt;-->
+<!--<track kind="captions" src="plugins/video/example-captions.vtt" srclang="en" label="English" default>-->
+<!--<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a-->
+<!--href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>-->
+<!--</video>-->
+
+<br>
+<br>
+<br>
+<br>
+
+<!--<video id="example_video_2" class="video-js vjs-default-skin vjs-big-play-centered">-->
+<!--<source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"/>-->
+<!--<track kind="captions" src="plugins/video/example-captions.vtt" srclang="en" label="English" default>-->
+
+<!--</video>-->
+
+<br>
+<br>
+<br>
+<br>
+<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered">
+</video>
+
+<div>
+    <h3>属性property: | 当前值currentValue</h3>
+    <ul>
+        <li>纵横比 aspect ratio: <span id="aspectRatio"></span></li>
+        <li>是否自动播放 autoplay: <span id="autoplay"></span></li>
+        <li>当前完整的URL currentSrc: <span id="currentSrc"></span></li>
+        <li>当前时间 currentTime: <span id="currentTime"></span></li>
+        <li>来源类型 currentType: <span id="currentType"></span></li>
+        <li>播放器尺寸 dimension: <span id="dimension"></span></li>
+        <li>视频长度（秒） duration: <span id="duration"></span></li>
+        <li>是否结束 ended: <span id="ended">false</span></li>
+        <li>控制器的语音 language: <span id="language"></span></li>
+        <li>是否循环播放 loop: <span id="loop"></span></li>
+        <li>是否静音 muted: <span id="muted"></span></li>
+        <li>当前网络状态 networkState: <span id="networkState"></span></li>
+        <li>是否暂停 paused: <span id="paused"></span></li>
+        <li>播放速率 playbackRate: <span id="playbackRate"></span></li>
+        <li>海报图像URL poster: <span id="poster"></span></li>
+        <li>预加载 preload: <span id="preload"></span></li>
+        <li>准备状态 readyState: <span id="readyState"></span></li>
+        <li>剩余时间 remainingTime: <span id="remainingTime"></span></li>
+        <li>点击或拖拽进度条 scrubbing: <span id="scrubbing"></span></li>
+        <li>用户活动状态 userActive: <span id="userActive"></span></li>
+        <li>视频尺寸 videoHeight/videoWidth: <span id="videoHeight"></span></li>
+        <li>声音 volume: <span id="volume"></span></li>
+    </ul>
+
+    <h3>事件event: | 触发次数time fired</h3>
+    <ul>
+        <li>timeupdate: <span id="timeupdate"></span></li>
+    </ul>
+</div>
+
+<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+<script src="http://vjs.zencdn.net/5.11.9/video.js"></script>
+<!--<script>-->
+<!--videojs(-->
+<!--'example_video_2',-->
+<!--{-->
+<!--// 是否显示控制面板-->
+<!--controls: true,-->
+<!--//-->
+<!--controlBar: {},-->
+<!--// 是否自动播放-->
+<!--autopaly: false,-->
+<!--// 是否预加载-->
+<!--preload: 'auto',-->
+<!--// 预览图-->
+<!--poster: 'http://vjs.zencdn.net/v/oceans.png',-->
+<!--// 是否循环播放-->
+<!--loop: false,-->
+<!--width: 640,-->
+<!--height: 264,-->
+<!--}-->
+<!--);-->
+<!--</script>-->
+
+<script>
+    // 播放器
+    videojs.addLanguage('zh-CN', {
+        "Play": "播放",
+        "Pause": "暂停",
+        "Current Time": "当前时间",
+        "Duration Time": "时长",
+        "Remaining Time": "剩余时间",
+        "Stream Type": "媒体流类型",
+        "LIVE": "直播",
+        "Loaded": "加载完毕",
+        "Progress": "进度",
+        "Fullscreen": "全屏",
+        "Non-Fullscreen": "退出全屏",
+        "Mute": "静音",
+        "Unmute": "取消静音",
+        "Playback Rate": "播放码率",
+        "Subtitles": "字幕",
+        "subtitles off": "字幕关闭",
+        "Captions": "内嵌字幕",
+        "captions off": "内嵌字幕关闭",
+        "Chapters": "节目段落",
+        "You aborted the media playback": "视频播放被终止",
+        "A network error caused the media download to fail part-way.": "网络错误导致视频下载中途失败。",
+        "The media could not be loaded, either because the server or network failed or because the format is not supported.": "视频因格式不支持或者服务器或网络的问题无法加载。",
+        "The media playback was aborted due to a corruption problem or because the media used features your browser did not support.": "由于视频文件损坏或是该视频使用了你的浏览器不支持的功能，播放终止。",
+        "No compatible source was found for this media.": "无法找到此视频兼容的源。",
+        "The media is encrypted and we do not have the keys to decrypt it.": "视频已加密，无法解密。"
+    });
+
+    // Player类实例
+    var myPlayer = videojs('myVideo', {
+        // 是否显示控制面板
+        controls: true,
+        //
+        controlBar: {},
+        // 是否自动播放
+        autoplay: false,
+        // 是否预加载
+        preload: 'auto',
+        // 预览图
+        poster: 'http://vjs.zencdn.net/v/oceans.png',
+        // 是否循环播放
+        loop: false,
+        width: 640,
+        height: 264,
+        language: 'zh-CN'
+    },function () {
+        // 基本ready事件
+        // PS：放下面类似这种配置类的代码应该比较合适，其他的事件放到额外ready事件里吧
+
+        // ↓： 我用的webstorm静态页打开的本地视频只能听声音，没有画面，可能必须在服务器上才行？
+//        myPlayer.src({type: 'video/mp4', src: 'plugins/video/梁静茹-呵护.mp4'});
+        myPlayer.src({type: 'video/mp4', src: 'http://play.68mtv.com:8080/play13/60963.mp4'});
+
+    });
+
+
+
+
+
+    // 将侦听器绑定到组件的就绪状态。 与事件侦听器不同的是，如果就绪事件已经发生，它将立即触发该函数。
+    // 如果组件就绪，则同步执行监听器
+    myPlayer.on('ready', function () {
+
+        // 获取/设置纵横比
+        // this.aspectRatio('16:9');
+        document.getElementById('aspectRatio').innerHTML = myPlayer.aspectRatio();
+
+        // 获取/设置自动播放
+        // myPlayer.autoplay(true);
+        document.getElementById('autoplay').innerHTML = myPlayer.autoplay();
+
+        // 获取当前完整URL
+        document.getElementById('currentSrc').innerHTML = myPlayer.currentSrc();
+
+        // 获取/设置当前时间
+        // myPlayer.currentTime(120);
+        document.getElementById('currentTime').innerHTML = myPlayer.currentTime();
+
+        // 获取来源类型
+        document.getElementById('currentType').innerHTML = myPlayer.currentType();
+
+        // 获取/设置播放器尺寸
+        // myPlayer.dimension('width',120);
+        // myPlayer.dimension('height',120);
+        // myPlayer.dimensions(120,120); // myPlayer.dimensions(width,height);
+        // myPlayer.height(120);
+        // myPlayer.width(120);
+        // myPlayer.currentWidth();
+        // myPlayer.videoWidth();
+        document.getElementById('dimension').innerHTML = 'width:' + myPlayer.dimension('width') + '  heigth:' + myPlayer.dimension('height');
+
+        // 获取视频长度
+        // (视频未加载，写在这里是没卵用)
+        document.getElementById('duration').innerHTML = myPlayer.duration();
+
+        // 获取播放器语言
+        // myPlayer.languages(); // 语言字典
+        document.getElementById('language').innerHTML = myPlayer.language();
+
+        // 开始加载src数据
+        // (如果设置preload:none，那么在播放前设置load()就可以预加载了)
+        // myPlayer.load();
+
+        // 获取/设置是否循环播放
+        // myPlayer.loop(true);
+        document.getElementById('loop').innerHTML = myPlayer.loop();
+
+        // 获取/设置是否静音
+        // myPlayer.muted(true);
+        document.getElementById('muted').innerHTML = myPlayer.muted();
+
+        // 获取当前网络状态
+        // 0.此元素未初始化  1.正常但没有使用网络  2.正在下载数据  3.没有找到资源
+        // NETWORK_EMPTY（数字值0）元素尚未初始化。 所有属性都处于其初始状态。
+        // NETWORK_IDLE（数字值1）元素的资源选择算法处于活动状态，并选择了一个资源，但此时它实际上并未使用网络。
+        // NETWORK_LOADING（数值为2）用户代理正在主动尝试下载数据。
+        // NETWORK_NO_SOURCE（数值为3）元素的资源选择算法处于活动状态，但尚未找到要使用的资源。
+        document.getElementById('networkState').innerHTML = myPlayer.networkState();
+
+        // 获取/设置是否暂停
+        // myPlayer.pause(true);
+        document.getElementById('paused').innerHTML = myPlayer.paused();
+
+        // 获取/设置播放速率
+        // (回放速率1.0表示正常速度，0.5表示半速回放，可以立即生效，所以写哪里都行)
+        // myPlayer.playbackRate(0.5);
+        document.getElementById('playbackRate').innerHTML = myPlayer.playbackRate();
+
+        // 获取/设置海报图像源网址
+        // myPlayer.poster('https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/logo_white_fe6da1ec.png');
+        document.getElementById('poster').innerHTML = myPlayer.poster();
+
+        // 获取/设置预加载
+        // myPlayer.preload('none');
+        // 'auto'：立即开始加载视频（如果浏览器同意）。 某些移动设备（如iPhones和iPad）不会预加载视频，以保护其用户的带宽。 这就是为什么这个值被称为'auto'，而不是像'true'这样的最终结果。
+        // 'metadata'：仅加载视频的元数据，其中包含视频的时长和尺寸等信息。
+        // 'none'：不要预加载任何视频数据。 这将等待，直到用户点击播放开始下载。
+        document.getElementById('preload').innerHTML = myPlayer.preload();
+
+        // 获取准备状态
+        // (视频未加载，写在这里是没卵用)
+        //从下面的列表中的代码中返回一个值，该值表示元素相对于渲染当前播放位置的当前状态。
+        //HAVE_NOTHING（数值0）没有关于媒体资源的信息可用。
+        //HAVE_METADATA（数字值1）已获得资源的持续时间可用的足够资源。
+        //HAVE_CURRENT_DATA（数值2）立即当前播放位置的数据可用。
+        //HAVE_FUTURE_DATA（数值3）立即当前播放位置的数据可用，以及用户代理在播放方向上推进当前播放位置的足够数据。
+        //HAVE_ENOUGH_DATA（数字值4）用户代理估计有足够的数据可供播放，以继续不间断。
+        // (放到timeupdate中，然后各种操作试试，例如拖动)
+        document.getElementById('readyState').innerHTML = myPlayer.readyState();
+
+        // 获取剩余时间
+        // (视频未加载，写在这里是没卵用)
+        document.getElementById('remainingTime').innerHTML = myPlayer.remainingTime();
+
+        // 点击或拖拽进度条
+        document.getElementById('scrubbing').innerHTML = myPlayer.scrubbing();
+
+        // 获取/设置用户活动状态
+        // (这个叼啊！！！自己加点逻辑，这样就能检测用户是否还坐在电脑面前看了)
+        // myPlayer.userActive(false);
+        document.getElementById('userActive').innerHTML = myPlayer.userActive();
+
+        // 获取视频宽高
+        // (视频未加载，写在这里是没卵用)
+        document.getElementById('videoHeight').innerHTML = myPlayer.videoHeight() + '*' + myPlayer.videoWidth();
+
+        // 获取/设置介质的当前音量
+        // 0是关闭（静音），1.0是一路向上，0.5是中途。
+        // myPlayer.volume(0.5);
+        document.getElementById('volume').innerHTML = myPlayer.volume();
+    });
+
+    // 监测当前播放时间事件
+    // (当当前播放位置已更改时触发*在播放过程中，每15  -  250毫秒触发一次，具体取决于使用的播放技术。)
+    var timeupdateTimes = 0;
+    myPlayer.on('timeupdate', function () {
+        document.getElementById('currentTime').innerHTML = myPlayer.currentTime();
+        document.getElementById('timeupdate').innerHTML = timeupdateTimes++;
+
+//        // 如果 currentTime() === duration()，则视频已播放完毕
+//        if (myPlayer.duration() != 0 && myPlayer.currentTime() === myPlayer.duration()) {
+//            // 播放结束
+//        }
+
+        // 当前准备状态
+        document.getElementById('readyState').innerHTML = myPlayer.readyState();
+        // 获取剩余时间
+        document.getElementById('remainingTime').innerHTML = myPlayer.remainingTime();
+
+        // 获取/设置用户活动状态
+        // myPlayer.userActive(false);
+        document.getElementById('userActive').innerHTML = myPlayer.userActive();
+
+    });
+
+    // 开始或回复播放事件
+    myPlayer.on('play', function () {
+        // 将视频的大小增加到全屏
+        // 没卵用，控制台出提示要手动开
+        // myPlayer.requestFullscreen();
+
+        // 是否暂停
+        document.getElementById('paused').innerHTML = myPlayer.paused();
+
+        // 获取视频长度
+        document.getElementById('duration').innerHTML = myPlayer.duration();
+
+        // 获取视频宽高
+        document.getElementById('videoHeight').innerHTML = myPlayer.videoHeight() + '*' + myPlayer.videoWidth();
+    });
+
+    // 暂停播放事件
+    myPlayer.on('pause', function () {
+        // 是否暂停
+        document.getElementById('paused').innerHTML = myPlayer.paused();
+
+        // 点击或拖拽进度条(拖拽会导致pause？？？)
+        document.getElementById('scrubbing').innerHTML = myPlayer.scrubbing();
+    });
+
+    // 播放结束事件
+    myPlayer.on('ended', function () {
+        document.getElementById('ended').innerHTML = myPlayer.ended();
+
+        // 销毁播放器，如果是动态添加的DOM，这个特别有用
+        // myPlayer.dispose();
+
+        // 不好使 myPlayer.reset();
+        // 不好使 myPlayer.bigPlayButton.show();
+        // 还不如直接设置src myPlayer.src({type: 'video/mp4', src: 'http://vjs.zencdn.net/v/oceans.mp4'});
+    });
+
+    // 发生错误时触发
+    myPlayer.on('error', function () {
+        // 获取/设置介质错误
+        // this.error({ code: 4, message: this.localize(this.options_.notSupportedMessage) });
+        // this.error(); //null:正常  否则是个object{code:'',message:''}
+        // myPlayer.error().message;
+        // myPlayer.error().code; // 1.用户终止 2.网络错误 3.解码错误 4.URL无效
+    });
+
+    // 当播放器已在当前播放位置下载数据时触发
+    // 下列信息来自Html5介绍↓：当当前帧的数据已加载，但没有足够的数据来播放指定音频/视频的下一帧时，会发生 loadeddata 事件。
+    // 当音频/视频处于加载过程中时，会依次发生以下事件：
+    // loadstart
+    // durationchange
+    // loadedmetadata
+    // loadeddata
+    // progress
+    // canplay
+    // canplaythrough
+    // (没搞明白这个事件到底怎么回事)
+    myPlayer.on('loadeddata', function () {
+
+    });
+
+    // 当播放器有初始持续时间和尺寸信息时触发
+    // 下列信息来自Html5介绍↓：onloadedmetadata 事件在指定视频/音频（audio/video）的元数据加载后触发。
+    // 视频/音频（audio/video）的元数据包含: 时长，尺寸大小（视频），文本轨道。
+    myPlayer.on('loadedmetadata', function () {
+
+    });
+
+    // 在用户活动时触发，例如 将鼠标移动到播放器上
+    myPlayer.on('useractive', function () {
+
+    });
+
+    // 当用户处于非活动状态时触发。 在最后一次鼠标移动或控制交互之后的短延迟
+    myPlayer.on('userinactive', function () {
+
+    });
+
+    // 声音改变
+    myPlayer.on('volumechange', function () {
+
+    });
+</script>
+</body>
+
+</html>

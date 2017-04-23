@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .mapTipText {
+            position: absolute;
+            width: 300px;
+            background-color: #ffffff;
+            border: 1px solid #0099ff;
+            font-family: 'Microsoft YaHei';
+            padding: 15px 10px 20px;
+            display: none;
+        }
+
+        .mapTipText:after {
+            display: table;
+            content: '';
+            clear: both;
+        }
+
+        .mapTipText .mapTipList {
+            float: left;
+        }
+
+        .mapTipText .mapTipList h2 {
+            margin-top: 0;
+            font-weight: normal;
+            text-align: left;
+            padding-left: 5px;
+        }
+
+        .mapTipText .mapTipList h2 a {
+            font-size: 24px;
+            color: #0099ff;
+        }
+
+        .mapTipText .mapTipList h2 a:hover {
+            color: #ff6600;
+        }
+
+        .mapTipText .mapTipList ul {
+            padding-right: 10px;
+        }
+
+        .mapTipText .mapTipList ul li {
+            list-style: none;
+            float: left;
+            padding: 5px;
+        }
+
+        .mapTipText .mapTipList ul li a {
+            color: #0099ff;
+        }
+
+        .mapTipText .mapTipList ul li a:hover {
+            color: #ff6600;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+    <script src="js/chinamapPath.js" type="text/javascript"></script>
+    <script src="js/chinamapPathNew.js" type="text/javascript"></script>
+    <script src="js/raphael.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+<div id="chinaMap"></div>
+<div id="worldMap"></div>
+
+<div class="mapTipText">
+    <div class="mapTipList">
+        <h2><a class="tipTitle">xxx省</a></h2>
+        <ul class="tipList">
+            <li><a href="javascript:;">xxx市</a></li>
+            <li><a href="javascript:;">xxx市</a></li>
+            <li><a href="javascript:;">xxx市</a></li>
+            <li><a href="javascript:;">xxx市</a></li>
+            <li><a href="javascript:;">xxx市</a></li>
+            <li><a href="javascript:;">xxx市</a></li>
+            <li><a href="javascript:;">xxx市</a></li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        // 名称样式
+        var textAttr = {
+            "fill": "#000",
+            "font-size": "12px",
+            "cursor": "pointer"
+        };
+
+        // ===================
+        // 世界地图
+        // ===================
+        (function ($) {
+            var worldR = Raphael("worldMap", 1000, 500);
+            //调用绘制地图方法
+            paintMapWorld(worldR);
+
+            $.each(world, function (index, item) {
+                var path = item.path;
+                var name = item.name;
+                path.color = Raphael.getColor(0.9);
+                // 获取当前图形的中心坐标
+                var xx = path.getBBox().x + (path.getBBox().width / 2);
+                var yy = path.getBBox().y + (path.getBBox().height / 2);
+
+                // 修改部分地图文字便宜坐标
+                switch (name) {
+                    case "北美洲":
+                        xx -= 50;
+                        yy -= 10;
+                        break;
+                    case "欧洲":
+                        xx += 5;
+                        yy += 5;
+                        break;
+                    case "亚洲":
+                        xx += 0;
+                        yy -= 30;
+                        break;
+                    case "南美洲":
+                        xx += 10;
+                        yy -= 20;
+                        break;
+                    case "非洲":
+                        xx += 10;
+                        yy += 0;
+                        break;
+                    case "大洋洲":
+                        xx += 270;
+                        yy += 30;
+                        break;
+                    default:
+                }
+
+                // 写入文字
+                item.text = worldR.text(xx, yy, name).attr(textAttr);
+
+                path.mouseover(function (e) {
+                    path.animate({fill: "#fdd", stroke: "#eee"}, 500);
+                    item.text.toBack();
+                    worldR.safari();
+                    $(".mapTipText").css({
+                        "top": (e.pageY - 70) + "px",
+                        "left": (e.pageX - 185) + "px"
+                    }).fadeIn("1500");
+                });
+
+                path.mouseout(function () {
+                    path.animate({fill: path.color, stroke: "#eee"}, 500);
+                    item.text.toFront();
+                    worldR.safari();
+                    // 当鼠标放在tip上的时候立马失去焦点，优先度这里高
+                    $('.mapTipText').hide();
+                });
+            });
+
+        })(jQuery);
+        // ===================
+        // 中国地图
+        // ===================
+        (function ($) {
+            var chinaR = Raphael("chinaMap", 1000, 500);
+            // 调用地图绘制方法
+            paintMap(chinaR);
+
+            $.each(china, function (index, item) {
+                var path = item.path;
+                var name = item.name;
+                path.color = Raphael.getColor(0.9);
+                // 获取当前图形的中心坐标
+                var xx = path.getBBox().x + (path.getBBox().width / 2);
+                var yy = path.getBBox().y + (path.getBBox().height / 2);
+
+                // 修改部分地图文字便宜坐标
+                switch (name) {
+                    case "江苏":
+                        xx += 5;
+                        yy -= 10;
+                        break;
+                    case "河北":
+                        xx -= 10;
+                        yy += 20;
+                        break;
+                    case "天津":
+                        xx += 10;
+                        yy += 10;
+                        break;
+                    case "上海":
+                        xx += 10;
+                        break;
+                    case "广东":
+                        yy -= 10;
+                        break;
+                    case "澳门":
+                        yy += 10;
+                        break;
+                    case "香港":
+                        xx += 20;
+                        yy += 5;
+                        break;
+                    case "甘肃":
+                        xx -= 40;
+                        yy -= 30;
+                        break;
+                    case "陕西":
+                        xx += 5;
+                        yy += 10;
+                        break;
+                    case "内蒙古":
+                        xx -= 15;
+                        yy += 65;
+                        break;
+                    default:
+                }
+
+                // 写入文字
+                item.text = chinaR.text(xx, yy, name).attr(textAttr);
+
+                path.mouseover(function (e) {
+                    path.animate({fill: "#fdd", stroke: "#eee"}, 500);
+                    item.text.toBack();
+                    chinaR.safari();
+                    $(".mapTipText").css({
+                        "top": (e.pageY - 70) + "px",
+                        "left": (e.pageX - 185) + "px"
+                    }).fadeIn("1500");
+                });
+
+                path.mouseout(function () {
+                    path.animate({fill: path.color, stroke: "#eee"}, 500);
+                    item.text.toFront();
+                    chinaR.safari();
+                    // 当鼠标放在tip上的时候立马失去焦点，优先度这里高
+                    $('.mapTipText').hide();
+                });
+            });
+
+        })(jQuery);
+
+
+        // 鼠标进入提示框
+        $('.mapTipText').mouseenter(function () {
+            // 实测svg mouseout优先度高
+            $(this).show();
+        });
+
+        // 鼠标离开提示框
+        $('.mapTipText').mouseleave(function () {
+            //$('#tip').delay(2000).hide(0);
+            // 实测svg mouseleave优先度低
+            $(this).hide();
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>
