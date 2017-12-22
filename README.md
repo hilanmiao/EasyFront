@@ -7,3 +7,4 @@
 - jquery-weui5级时间选择控件改造
 
 截图：
+https://github.com/hilanmiao/EasyFront/blob/master/datetime-picker/screenhost.png
