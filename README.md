@@ -4,3 +4,6 @@
 - 轻量的JQuery轮播图插件unsilder
 - Html5视频播放器videoJs
 - javascript矢量图形库raphaelJS绘制SVG中国地图
+- jquery-weui5级时间选择控件改造
+
+截图：
