@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery WeUI</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+
+    <link rel="stylesheet" href="lib/weui.min.css">
+    <link rel="stylesheet" href="css/jquery-weui.css">
+    <link rel="stylesheet" href="css/demos.css">
+    <style>
+        .picker-units {
+            display: flex;
+            justify-content: center;
+            font-size: 12px;
+            padding-top: 5px;
+            color: #999999;
+        }
+
+        .toolbar-inner {
+            background: #fff;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .weui-picker-modal {
+            background: #fff;
+            font-size: 18px;
+            height: auto;
+        }
+
+        .weui-picker-modal .picker-items {
+            font-size: 18px;
+        }
+
+        .weui-btn {
+            border-radius: 0;
+            font-size: 14px;
+        }
+
+        .weui-btn:after {
+            border-radius: 0;
+            border: 0;
+            border-top: 1px solid rgba(0, 0, 0, .2);
+        }
+
+        .weui-btn_default {
+            background-color: #fff;
+        }
+		.toolbar .picker-button:first-child {
+            right: auto;
+        }
+    </style>
+
+</head>
+
+<body ontouchstart>
+<header class='demos-header'>
+    <h1 class="demos-title">Picker</h1>
+</header>
+
+<div class="weui-cells weui-cells_form">
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="time-format" class="weui-label">第一个</label></div>
+        <div class="weui-cell__bd">
+            <!--<input class="weui-input" id="time-format" type="text" value="2012年12月12日 12时13分">-->
+            <input class="weui-input" id="time-format" type="text">
+        </div>
+    </div>
+
+    <div class="weui-cell">
+        <div class="weui-cell__hd"><label for="time-format" class="weui-label">第二个</label></div>
+        <div class="weui-cell__bd">
+            <!--<input class="weui-input" id="time-format" type="text" value="2012年12月12日 12时13分">-->
+            <input class="weui-input" id="time-format2" type="text">
+        </div>
+    </div>
+
+       <div>
+        NOTE: 一个页面多个实例时存在一个bug,暂时使用两份拷贝来阻止 <br>
+        即引用方式为:<br>
+        ../js/datetime-picker.js<br>
+        ../js/datetime-picker2.js<br>
+        ../js/picker.js<br>
+        ../js/picker2.js<br>
+        实例:<br>
+        $("#time-format").datetimePicker({...<br>
+        $("#time-format2").datetimePicker2({<br>
+        具体查看demo样板<br>
+        关于值：可以直接获取 $(input).val(),也可以在实例的onchange事件中再format<br>
+    </div>
+</div>
+
+
+<div id="time-container"></div>
+<script src="lib/jquery-2.1.4.js"></script>
+<script src="lib/fastclick.js"></script>
+<script>
+    $(function () {
+        FastClick.attach(document.body);
+    });
+</script>
+<script src="js/jquery-weui.js"></script>
+<script src="js/datetime-picker.js"></script>
+<script src="js/datetime-picker2.js"></script>
+<script src="js/picker.js"></script>
+<script src="js/picker2.js"></script>
+
+<script>
+
+    $("#time-format").datetimePicker({
+        title: '',
+        yearSplit: '',
+        monthSplit: '',
+        times: function () {
+            return [  // 自定义的时间
+                {
+                    values: (function () {
+                        var hours = [];
+                        for (var i = 0; i < 24; i++) hours.push(i > 9 ? i : '0' + i);
+                        return hours;
+                    })()
+                },
+                {
+                    divider: true,  // 这是一个分隔符
+                    content: ''
+                },
+                {
+                    values: (function () {
+                        var minutes = [];
+                        for (var i = 0; i < 59; i++) minutes.push(i > 9 ? i : '0' + i);
+                        return minutes;
+                    })()
+                },
+                {
+                    divider: true,  // 这是一个分隔符
+                    content: ''
+                }
+            ];
+        },
+        onChange: function (picker, values, displayValues) {
+            // 重新格式化时间
+            var dataFormat = values[0] + '-' + values[1] + '-' + values[2] + ' ' + values[3] + ':' + values[4];
+            $(picker.input).val(dataFormat);
+            $(picker.container).find('.toolbar .title').text(dataFormat);
+            console.log(values);
+        }
+    });
+
+    $("#time-format2").datetimePicker2({
+        title: '',
+        yearSplit: '',
+        monthSplit: '',
+        times: function () {
+            return [  // 自定义的时间
+                {
+                    values: (function () {
+                        var hours = [];
+                        for (var i = 0; i < 24; i++) hours.push(i > 9 ? i : '0' + i);
+                        return hours;
+                    })()
+                },
+                {
+                    divider: true,  // 这是一个分隔符
+                    content: ''
+                },
+                {
+                    values: (function () {
+                        var minutes = [];
+                        for (var i = 0; i < 59; i++) minutes.push(i > 9 ? i : '0' + i);
+                        return minutes;
+                    })()
+                },
+                {
+                    divider: true,  // 这是一个分隔符
+                    content: ''
+                }
+            ];
+        },
+        onChange: function (picker, values, displayValues) {
+            // 重新格式化时间
+            var dataFormat = values[0] + '-' + values[1] + '-' + values[2] + ' ' + values[3] + ':' + values[4];
+            $(picker.input).val(dataFormat);
+            $(picker.container).find('.toolbar .title').text(dataFormat);
+            console.log(values);
+        }
+    });
+</script>
+</body>
+</html>
