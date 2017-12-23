@@ -584,7 +584,10 @@
                     }
                 }
                 else {
-                    if (p.value) p.setValue(p.value, 0);
+                    if (p.value) {
+                        p.setValue(p.value, 0)
+                        p.updateValue()
+                    }
                 }
             }
 
