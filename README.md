@@ -11,7 +11,7 @@
 - 轻量的JQuery轮播图插件unsilder<br />
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/unslider/screenhost/1.png)
 - Html5视频播放器videoJs<br />
-![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/videojs/screenhost/1.png)
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/videoJs/screenhost/1.png)
 - javascript矢量图形库raphaelJS绘制SVG中国地图<br />
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/raphael/screenhost/1.png)
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/raphael/screenhost/2.png)
