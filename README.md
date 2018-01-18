@@ -8,8 +8,15 @@
 - 慕课网h5+css3实现春节贺卡
 
 截图：
+- 轻量的JQuery轮播图插件unsilder<br />
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/unslider/screenhost/1.png)
+- Html5视频播放器videoJs<br />
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/videojs/screenhost/1.png)
+- javascript矢量图形库raphaelJS绘制SVG中国地图<br />
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/raphael/screenhost/1.png)
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/raphael/screenhost/2.png)
 - jquery-weui5级时间选择控件改造<br />
-![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/datetime-picker/screenhost.png)
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/datetime-picker/screenhost/1.png)
 - 慕课网h5+css3实现春节贺卡<br />
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happyNewYear/screenhost/1.png)
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happyNewYear/screenhost/2.png)
