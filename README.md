@@ -5,6 +5,12 @@
 - Html5视频播放器videoJs
 - javascript矢量图形库raphaelJS绘制SVG中国地图
 - jquery-weui5级时间选择控件改造
+- 慕课网h5+css3实现春节贺卡
 
 截图：
+- jquery-weui5级时间选择控件改造
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/datetime-picker/screenhost.png)
+- 慕课网h5+css3实现春节贺卡
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happyNewYear/screenhost/1.png)
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happyNewYear/screenhost/2.png)
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happyNewYear/screenhost/3.png)
