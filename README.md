@@ -26,4 +26,4 @@
 - canvas绚丽的倒计时效果<br />
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/canvas-clock/screenhost/1.png)
 - h5+css3实现春节贺卡（animate.css+canvas飘雪效果）<br />
-![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happy-new-year-min/screenhost/1.gif)
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happy-new-year-min/screenhost/1.png)
