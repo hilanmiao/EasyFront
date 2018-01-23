@@ -7,6 +7,7 @@
 - jquery-weui5级时间选择控件改造
 - h5+css3实现春节贺卡
 - canvas绚丽的倒计时效果
+- h5+css3实现春节贺卡（animate.css+canvas飘雪效果）
 
 截图：
 - 轻量的JQuery轮播图插件unsilder<br />
@@ -24,3 +25,5 @@
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happyNewYear/screenhost/3.png)
 - canvas绚丽的倒计时效果<br />
 ![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/canvas-clock/screenhost/1.png)
+- h5+css3实现春节贺卡（animate.css+canvas飘雪效果）<br />
+![Alt text](https://github.com/hilanmiao/EasyFront/blob/master/happy-new-year-min/screenhost/1.gif)
